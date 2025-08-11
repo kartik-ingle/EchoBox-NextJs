@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { Material } from "three";
+
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
@@ -196,17 +198,29 @@ const ShaderMaterial = ({
   let lastFrameTime = 0;
 
   useFrame(({ clock }) => {
-    if (!ref.current) return;
-    const timestamp = clock.getElapsedTime();
-    if (timestamp - lastFrameTime < 1 / maxFps) {
-      return;
-    }
-    lastFrameTime = timestamp;
+  if (!ref.current) return;
+  const timestamp = clock.getElapsedTime();
 
-    const material: any = ref.current.material;
-    const timeLocation = material.uniforms.u_time;
-    timeLocation.value = timestamp;
-  });
+  if (timestamp - lastFrameTime < 1 / maxFps) {
+    return;
+  }
+  lastFrameTime = timestamp;
+
+  const material: Material | Material[] | undefined = ref.current.material;
+
+  // Helper to update uniform if exists
+  const updateUniformTime = (mat: any) => {
+    if (mat.uniforms && mat.uniforms.u_time) {
+      mat.uniforms.u_time.value = timestamp;
+    }
+  };
+
+  if (Array.isArray(material)) {
+    material.forEach(mat => updateUniformTime(mat));
+  } else if (material) {
+    updateUniformTime(material);
+  }
+});
 
   const getUniforms = () => {
     const preparedUniforms: any = {};

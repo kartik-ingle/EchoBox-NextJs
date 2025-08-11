@@ -4,6 +4,7 @@
 import { Github, Linkedin } from "lucide-react";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const TitleComponent = ({
   title,
@@ -13,7 +14,7 @@ const TitleComponent = ({
   avatar: string;
 }) => (
   <div className="flex items-center space-x-2">
-    <img
+    <Image
       src={avatar}
       height={20}
       width={20}

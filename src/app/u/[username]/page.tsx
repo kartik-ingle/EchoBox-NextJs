@@ -40,9 +40,7 @@ export default function SendMessage() {
   const username = params.username;
 
   const {
-    complete,
     completion,
-    isLoading: isSuggestLoading,
     error,
   } = useCompletion({
     api: '/api/suggest-messages',

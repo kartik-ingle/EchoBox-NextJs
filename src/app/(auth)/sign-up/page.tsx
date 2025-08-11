@@ -19,7 +19,7 @@ import { ColourfulText } from "@/components/ui/colourful-text"
 
 
 
-function page() {
+function Page() {
   const [username, setUsername] = useState('')
   const [usernameMessage, setUsernameMessage] = useState('')
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
@@ -74,7 +74,7 @@ function page() {
     } catch (error) {
       console.error("Error in signup of user", error)
       const axiosError = error as AxiosError<ApiResponse>
-      let errorMessage = axiosError.response?.data.message
+      const errorMessage = axiosError.response?.data.message
       toast("Signup failed", {
         description: errorMessage,
         style: {
@@ -187,4 +187,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

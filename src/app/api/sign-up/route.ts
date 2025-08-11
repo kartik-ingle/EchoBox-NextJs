@@ -24,8 +24,6 @@ export async function POST(request: Request) {
     const existingUserByEmail = await UserModel.findOne({ email });
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-    let user;
-
     if (existingUserByEmail) {
       if (existingUserByEmail.isVerified) {
         return Response.json(
@@ -38,13 +36,13 @@ export async function POST(request: Request) {
       existingUserByEmail.password = await bcrypt.hash(password, 10);
       existingUserByEmail.verifyCode = verifyCode;
       existingUserByEmail.verifyExpiry = new Date(Date.now() + 3600000);
-      user = await existingUserByEmail.save();
+      existingUserByEmail.save();
     } else {
       // Create new user
       const expiryDate = new Date();
       expiryDate.setHours(expiryDate.getHours() + 1);
 
-      user = await new UserModel({
+      await new UserModel({
         username,
         email,
         password: await bcrypt.hash(password, 10),

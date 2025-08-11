@@ -5,6 +5,8 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 
+
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -38,8 +40,12 @@ export const authOptions: NextAuthOptions = {
           } else {
             throw new Error('Incorrect password');
           }
-        } catch (err: any) {
-          throw new Error(err);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            throw new Error(err.message);
+          } else {
+            throw new Error("Unknown error occurred");
+          }
         }
       },
     }),
