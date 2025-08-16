@@ -14,11 +14,7 @@ import AutoPlay from "embla-carousel-autoplay"
 import { Cover } from "@/components/ui/cover"
 import { motion } from "framer-motion"
 
-
 export default function Home() {
-
-
-  
   
   return (
     <main className="relative flex-grow flex flex-col items-center justify-center px-4 md:px-24 py-20 overflow-hidden">

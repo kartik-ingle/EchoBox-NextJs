@@ -5,6 +5,5 @@ import UserDashboard from "./UserDashboard";
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
-  // Pass session down as a prop
   return <UserDashboard initialSession={session} />;
 }

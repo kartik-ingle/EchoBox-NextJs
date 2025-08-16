@@ -53,5 +53,4 @@ export async function DELETE(request: Request, {params}: {params: {messageid: st
         )
     }
     
-    
 }

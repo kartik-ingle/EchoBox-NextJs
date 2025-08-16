@@ -10,13 +10,18 @@ import { ApiResponse } from "@/types/ApiResponse"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios, { AxiosError } from "axios"
 import { Loader2, RefreshCcw } from "lucide-react"
+import { Session } from "next-auth";
 
 import { useSession } from "next-auth/react"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-function UserDashboard() {
+interface UserDashboardProps {
+  initialSession: Session | null;
+}
+
+function UserDashboard({ initialSession }: UserDashboardProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSwitchLoading, setIsSwitchLoading] = useState(false)
@@ -57,8 +62,8 @@ function UserDashboard() {
       toast("Error", {
         description: axiosError.response?.data.message || "Failed to fetch message settings",
         style: {
-          backgroundColor: "#fef2f2", // light red background
-          color: "#b91c1c",           // dark red text
+          backgroundColor: "#fef2f2", 
+          color: "#b91c1c",         
         },
       })
     } finally {
@@ -82,8 +87,8 @@ function UserDashboard() {
       toast("Error", {
         description: axiosError.response?.data.message || "Failed to fetch message settings",
         style: {
-          backgroundColor: "#fef2f2", // light red background
-          color: "#b91c1c",           // dark red text
+          backgroundColor: "#fef2f2", 
+          color: "#b91c1c",     
         },
       })
     } finally {
@@ -144,7 +149,6 @@ function UserDashboard() {
 
   return (
     <div className="flex mt-16 flex-col md:flex-row min-h-screen bg-gray-900 text-gray-300 select-none">
-      {/* Sidebar */}
       <aside className="w-full pt-16 md:w-100 bg-gray-800 border-b md:border-b-0 md:border-r border-gray-700 flex flex-col p-8 shadow-xl">
         <h1 className="text-3xl font-bold text-pink-500 mb-6">User Dashboard</h1>
         <div className="mb-6">
@@ -200,7 +204,6 @@ function UserDashboard() {
 
       </aside>
 
-      {/* Main Content - Messages */}
       <main className="flex-1 pt-16 p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-600 scrollbar-track-transparent">
         {messages.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
